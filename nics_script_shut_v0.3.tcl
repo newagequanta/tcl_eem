@@ -75,7 +75,7 @@ foreach line [split $result "\n"] {
     set elems [split $line]
     puts [llength $elems]; #TEST
     set iface [lindex $elems 0]
-    if { ! [regexp {Gi} $iface] } {
+    if { ! [regexp {Te|Gi|Fa} $iface] } {
     continue
     }
     
