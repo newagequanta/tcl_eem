@@ -69,11 +69,11 @@ if { [catch {open $suspend_ports_config "r"} result] } {
 set result [run_cli [list "show interface descrip | in Gi|Fa|Te"]]
 set fo [open "flash:TCL_Scripts/sample_out.txt" "w"] 
 foreach line [split $result "\n"] {
-    puts "in Loop"; #TEST
+    #puts "in Loop"; #TEST
     set line [string trim $line]
     regsub -all {\s+} $line " " line
     set elems [split $line]
-    puts [llength $elems]; #TEST
+    #puts [llength $elems]; #TEST
     set iface [lindex $elems 0]
     if { ! [regexp {Te|Gi|Fa} $iface] } {
     continue
@@ -90,7 +90,7 @@ foreach line [split $result "\n"] {
     } else {
         set status $DOWN
     }
-    puts "Interface - $iface Status - $status"; #TEST
+    #puts "Interface - $iface Status - $status"; #TEST
 
     if { [info exists ports($iface)] } {
         if { $status == $UP || $status == $ADMIN_DOWN || $status == $DO_NOT_TOUCH} {
@@ -108,8 +108,8 @@ foreach line [split $result "\n"] {
     
 }
 
-puts [array get ports]; #TEST
-puts "Suspend ports [array get suspend_ports]"; #TEST
+#puts [array get ports]; #TEST
+#puts "Suspend ports [array get suspend_ports]"; #TEST
 #open and update the $suspend_ports_config
 set fd [open $suspend_ports_config "w"]
 puts -nonewline $fd [array get ports]
@@ -120,7 +120,7 @@ close $fd
 set cli_cmd [list "config t"]
 foreach interface [array names suspend_ports] {
     set if_line "interface $interface"
-    puts $if_line; #TEST
+    #puts $if_line; #TEST
     set cli_cmd [concat $cli_cmd [list "interface $interface" "shut"]]
     action_syslog msg "Shutting down port $interface since it was last used on [clock format $suspend_ports($interface)]"
 }
