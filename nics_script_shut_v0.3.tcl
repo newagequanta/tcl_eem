@@ -1,4 +1,4 @@
-puts [open "flash:TCL_Scripts/cli_open_demo.tcl" w+] {
+puts [open "flash:TCL_Scripts/va_suspend_ports.tcl" w+] {
 ::cisco::eem::event_register_none queue_priority normal maxrun 600
 namespace import ::cisco::eem::*
 namespace import ::cisco::lib::*
