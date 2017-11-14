@@ -1,4 +1,4 @@
-puts [open "flash:TCL_Scripts/remove_potential_suspend_ports.tcl" w+] {
+puts [open "flash:TCL_Scripts/va_unsuspend_ports.tcl" w+] {
 ::cisco::eem::event_register_syslog pattern "LINEPROTO-5-UPDOWN" maxrun 600
 #-
 # Copyright (c) 2009 Joe Marcus Clarke <jclarke@cisco.com>
@@ -78,16 +78,18 @@ puts [array get arr_einfo]; #TEST
 if { ! [regexp {Interface ([^,]+), changed state to up} $arr_einfo(msg) -> iface] } {
     exit
 }
-
+puts "Interface gleand from log was $iface"; #TEST
 #replace longform interface names to shortform to match storage on suspend_ports_config
 regsub {GigabitEthernet} $iface "Gi" iface
 regsub {TenGigabitEthernet} $iface "Te" iface
 regsub {FastEthernet} $iface "Fa" iface
 
+puts "Interface shortened to $iface"; #TEST
+
 
 while { 1 } {
-    set results [run_cli [list "show event manager policy pending | include tm_suspend_ports.tcl"]]
-    if { ! [regexp {tm_suspend_ports.tcl} $results] } {
+    set results [run_cli [list "show event manager policy pending | include va_suspend_ports.tcl"]]
+    if { ! [regexp {va_suspend_ports.tcl} $results] } {
 	break
     }
     after 1000
