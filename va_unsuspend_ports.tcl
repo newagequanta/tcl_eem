@@ -80,8 +80,8 @@ if { ! [regexp {Interface ([^,]+), changed state to up} $arr_einfo(msg) -> iface
 }
 puts "Interface gleand from log was $iface"; #TEST
 #replace longform interface names to shortform to match storage on suspend_ports_config
-regsub {GigabitEthernet} $iface "Gi" iface
 regsub {TenGigabitEthernet} $iface "Te" iface
+regsub {GigabitEthernet} $iface "Gi" iface
 regsub {FastEthernet} $iface "Fa" iface
 
 puts "Interface shortened to $iface"; #TEST
